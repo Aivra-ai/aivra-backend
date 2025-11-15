@@ -13,8 +13,14 @@ app.get('/health', (req, res) => res.json({ status: 'ok', time: new Date().toISO
 const chatRoutes = require('./src/routes/chat');
 app.use('/api/chats', chatRoutes);
 
-// Fallback
+// --- health check ---
+app.get('/api/health', (req, res) => {
+  return res.json({ status: 'ok', time: Date.now() });
+});
+
+// Fallback (must be last)
 app.use((req, res) => res.status(404).json({ error: 'not_found' }));
+
 
 app.listen(port, () => {
   console.log(`Aivra backend listening on port ${port}`);
